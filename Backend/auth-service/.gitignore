@@ -1,0 +1,28 @@
+# Environment files (all copies, anywhere in the repo)
+.env
+**/.env
+application-local.properties
+**/application-local.properties
+
+# Gradle
+build/
+.gradle/
+**/build/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Node / React frontend
+node_modules/
+dist/
+.vite/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

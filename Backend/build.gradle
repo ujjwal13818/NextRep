@@ -1,0 +1,36 @@
+//this outside build.gradle applies to all the submodules
+
+plugins {
+    id 'org.springframework.boot' version '3.4.5' apply false  //sets spring boot version for all submodules and false tells make this version known but don't actually apply it at root;
+    id 'io.spring.dependency-management' version '1.1.5' apply false
+    id 'java'
+}
+
+allprojects {
+    group = 'com.nextset'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(22)
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testImplementation 'org.mockito:mockito-core'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}

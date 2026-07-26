@@ -1,0 +1,23 @@
+pluginManagement {  //first resolves plugin and where to look for.
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()  //as a fallback if not found in gradlePluginPortal then look in maveCentral;
+    }
+}
+
+dependencyResolutionManagement {  //then resolves dependencies and where to look for
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'nextset' //name of the project
+
+// now include all the modules within the project
+
+//include 'common'
+include 'auth-service'
+//include 'workout-service'
+//include 'ai-recommendation-service'
+//include 'analytics-service'
+//include 'api-gateway'

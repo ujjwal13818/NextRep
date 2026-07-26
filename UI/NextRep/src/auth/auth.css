@@ -1,0 +1,103 @@
+/* auth.css */
+* {
+  box-sizing: border-box;
+}
+
+.AuthContainer {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 60, 0, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 200, 0, 0.06), transparent 40%);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.AuthCard {
+  width: 100%;
+  max-width: 420px;
+  padding: 56px 40px;
+  border-radius: 16px;
+  background: #131313;
+  border: 1px solid #262626;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+  text-align: center;
+}
+
+.LogoBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.LogoIcon {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px rgba(255, 150, 0, 0.6));
+}
+
+.LogoText {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #f5f5f5;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.LogoAccent {
+  color: #ff4d00;
+  text-shadow: 0 0 20px rgba(255, 77, 0, 0.5);
+}
+
+.Tagline {
+  color: #8a8a8a;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  margin: 0 0 40px 0;
+  text-transform: uppercase;
+}
+
+.GoogleButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 20px;
+  background: #f5f5f5;
+  color: #111;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.3px;
+}
+
+.GoogleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 77, 0, 0.25);
+}
+
+.GoogleButton:active {
+  transform: translateY(0);
+}
+
+.GoogleIcon {
+  flex-shrink: 0;
+}
+
+.FootNote {
+  margin-top: 28px;
+  color: #555;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}

@@ -1,0 +1,29 @@
+Dependency = code your app uses at compile/runtime.
+It's a library — a jar full of classes — that your own code calls into directly. You write import statements against it.
+
+Example: spring-boot-starter-web gives you classes like @RestController, @GetMapping — you write Java code that directly uses these. Same with postgresql (JDBC driver classes your JPA layer calls) or jjwt-api (you call Jwts.builder()... in your own code).
+
+Plugin = a tool that changes how Gradle itself behaves — it adds new tasks, conventions, or capabilities to the build process, not classes you import.
+
+Example: org.springframework.boot plugin doesn't give you any Java classes to import. Instead, it:
+
+Adds the bootJar task (packages your app as an executable fat jar with an embedded Tomcat)
+Adds the bootRun task (lets you do ./gradlew bootRun to launch the app)
+Changes how the dependency-management plugin resolves versions (lets you skip version numbers on Spring dependencies)
+
+Similarly, io.spring.dependency-management is a plugin — it doesn't give you code to call, it changes how other dependencies get resolved (auto-picking compatible versions).
+
+A simple mental test: if you'd write import for it in a .java file → it's a dependency. If it changes what ./gradlew tasks shows you, or changes build behavior/conventions → it's a plugin.
+
+
+If the refresh_token table is getting created automatically when your Spring Boot application starts, it's almost certainly because of Hibernate.
+
+I noticed in your application.properties:
+
+spring.jpa.hibernate.ddl-auto=update
+
+When ddl-auto=update, Hibernate:
+
+Scans all classes annotated with @Entity.
+Compares them with the database schema.
+Creates any missing tables and columns automatically.
