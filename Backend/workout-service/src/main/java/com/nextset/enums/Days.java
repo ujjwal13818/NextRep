@@ -1,0 +1,5 @@
+package com.nextset.enums;
+
+public enum Days {
+    CHEST_DAY, BACK_DAY, LEG_DAY, SHOULDER_DAY, BICEPS_DAY, CORE_DAY, TRICEPS_DAY, FOREARM_DAY, PUSH_DAY, PULL_DAY;
+}
