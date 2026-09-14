@@ -18,7 +18,10 @@ function AuthCallback() {
       // Clean the URL so tokens don't linger in browser history
       window.history.replaceState({}, document.title, "/auth/callback");
 
-      navigate("/dashboard", { replace: true });
+      console.log("Tokens stored. Redirecting to /exercises...");
+
+      // In AuthCallback.jsx (authUi)
+      window.location.href = `http://localhost:5174/exercises?token=${token}&refreshToken=${refreshToken}`;
     } else {
       setStatus("error");
       const timeout = setTimeout(() => {

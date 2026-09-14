@@ -1,0 +1,209 @@
+/* Exercises.css — dark, bold, gym-forward aesthetic */
+
+.ExercisesPage {
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  background: radial-gradient(circle at top, #161616 0%, #0a0a0a 60%);
+  color: #f2f2f2;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.ExercisesTitle {
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 8px;
+  color: #fff;
+  border-left: 5px solid #e63946;
+  padding-left: 16px;
+}
+
+.ExercisesTitle::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #e63946;
+  margin-top: 10px;
+}
+
+.ExercisesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.ExerciseCard {
+  background: linear-gradient(145deg, #1b1b1b, #121212);
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.ExerciseCard:hover {
+  transform: translateY(-6px);
+  border-color: #e63946;
+  box-shadow: 0 12px 28px rgba(230, 57, 70, 0.25);
+}
+
+.ExerciseImage {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.05);
+  border-bottom: 1px solid #2a2a2a;
+  transition: filter 0.25s ease;
+}
+
+.ExerciseCard:hover .ExerciseImage {
+  filter: grayscale(0%) contrast(1.1);
+}
+
+.ExerciseCardBody {
+  padding: 16px 18px 20px;
+}
+
+.ExerciseName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.ExerciseMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.ExerciseEquipment {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ccc;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.ExerciseDifficulty {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.ExerciseDifficulty[data-difficulty="beginner"] {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+}
+
+.ExerciseDifficulty[data-difficulty="intermediate"] {
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+}
+
+.ExerciseDifficulty[data-difficulty="advanced"] {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.ExerciseCard:has(.ExerciseDifficulty[data-difficulty="beginner"]):hover {
+  border-color: #4ade80;
+  box-shadow: 0 12px 28px rgba(74, 222, 128, 0.2);
+}
+
+.ExerciseCard:has(.ExerciseDifficulty[data-difficulty="intermediate"]):hover {
+  border-color: #facc15;
+  box-shadow: 0 12px 28px rgba(250, 204, 21, 0.2);
+}
+
+.ExerciseCard:has(.ExerciseDifficulty[data-difficulty="advanced"]):hover {
+  border-color: #ef4444;
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.2);
+}
+
+.ExerciseInstructions {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #b5b5b5;
+  margin: 0;
+}
+
+/* Status states */
+.ExercisesStatus {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.ExercisesError {
+  color: #e63946;
+}
+
+.ExercisesEmpty {
+  color: #777;
+  font-size: 1rem;
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .ExercisesTitle {
+    font-size: 1.6rem;
+  }
+
+  .ExercisesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.BackButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: #888;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 6px 2px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.BackButton:hover,
+.BackButton:focus,
+.BackButton:active {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: #888;
+}
