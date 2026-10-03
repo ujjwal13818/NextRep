@@ -1,4 +1,12 @@
 package com.nextset.response;
 
-public class WorkoutExerciseLogResponse {
-}
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+public record WorkoutExerciseLogResponse(
+        UUID id,
+        UUID sessionId,
+        UUID exerciseId,
+        String exerciseName,
+        OffsetDateTime createdAt
+) {}

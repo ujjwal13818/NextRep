@@ -1,0 +1,65 @@
+.AppShell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.GlobalTopBar {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.GlobalSummaryButton,
+.GlobalLogoutButton {
+  pointer-events: auto;
+}
+
+.GlobalSummaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid rgba(230, 57, 70, 0.35);
+  color: #e7cc19;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.GlobalSummaryButton:hover{
+  background-color: black ;
+}
+
+.GlobalLogoutButton {
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f02121;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.GlobalLogoutButton:hover{
+  background-color: black;
+}
+
+
+.AppShell > *:not(.GlobalTopBar) {
+  padding-top: 100px; 
+}

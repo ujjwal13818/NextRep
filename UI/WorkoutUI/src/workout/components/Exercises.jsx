@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Exercises.css";
-import {  useNavigate } from "react-router-dom";
 
-const API_BASE = "http://localhost:8080/api/workouts"; // confirm this matches your actual running port
+const API_BASE = "http://localhost:8080/api/workouts";
 
 const BODY_PART_IDS = {
   chest: "4616b8ed-d63d-4ac3-bb83-847a125f7f1f",
@@ -11,33 +10,26 @@ const BODY_PART_IDS = {
   shoulder: "549671d1-8f3d-44d9-b303-8dd7e8affa5e",
   neck: "161fa6b5-3c10-4fe7-9021-075713e106b3",
   cardio: "93f3c574-86ca-48ad-80c9-caa5cf657b2d",
-
   upperLeg: "bf3876ae-0acd-4381-aeb8-7b5180843878",
   lowerLeg: "3cad5129-2dfe-46fd-bac1-cf9a08d340fb",
   upperArm: "904f10fc-9489-4a3e-a07e-cb41fe4502fe",
   lowerArm: "01061dc7-7405-491c-92e7-db64aec401f1",
   waist: "55b98a42-7fe4-473f-8933-a722fd5a4ed1",
-
-  // Aliases matching DaysCards' MUSCLE_GROUP_META keys
-  biceps: "904f10fc-9489-4a3e-a07e-cb41fe4502fe", // same as upperArm
-  triceps: "904f10fc-9489-4a3e-a07e-cb41fe4502fe", // same as upperArm
-  forearm: "01061dc7-7405-491c-92e7-db64aec401f1", // same as lowerArm
-  core: "55b98a42-7fe4-473f-8933-a722fd5a4ed1", // same as waist
-
-  // TEMPORARY: "leg" defaults to upperLeg until you decide how leg day should behave
-  // (single group vs. combined upperLeg+lowerLeg fetch)
+  biceps: "904f10fc-9489-4a3e-a07e-cb41fe4502fe",
+  triceps: "904f10fc-9489-4a3e-a07e-cb41fe4502fe",
+  forearm: "01061dc7-7405-491c-92e7-db64aec401f1",
+  core: "55b98a42-7fe4-473f-8933-a722fd5a4ed1",
   leg: "bf3876ae-0acd-4381-aeb8-7b5180843878",
-
-  // "pull" and "push" are training splits spanning multiple body parts —
-  // no single body_part row exists for these, left unmapped intentionally
 };
 
 export default function Exercises() {
   const { bodyPart } = useParams();
+  const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [startingId, setStartingId] = useState(null);
+  const [currentSessionId, setCurrentSessionId] = useState(null);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -45,7 +37,6 @@ export default function Exercises() {
       setError(null);
 
       const bodyPartId = BODY_PART_IDS[bodyPart];
-
       if (!bodyPartId) {
         setError(`No body part mapping found for "${bodyPart}"`);
         setLoading(false);
@@ -54,19 +45,13 @@ export default function Exercises() {
 
       try {
         const token = localStorage.getItem("accessToken");
-
         const response = await fetch(
           `${API_BASE}/body-part/${bodyPartId}/exercises`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
+          { headers: { Authorization: `Bearer ${token}` } },
         );
 
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(`Request failed with status ${response.status}`);
-        }
 
         const data = await response.json();
         setExercises(data);
@@ -79,6 +64,31 @@ export default function Exercises() {
 
     fetchExercises();
   }, [bodyPart]);
+
+  const handleExerciseClick = async (exercise) => {
+    setStartingId(exercise.id);
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await fetch(
+        `${API_BASE}/exercise-log/${exercise.id}/start`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      if (!response.ok)
+        throw new Error(`Failed to start exercise log (${response.status})`);
+
+      const data = await response.json();
+      navigate(`/log/${data.id}`, {
+        state: { exerciseName: data.exerciseName, sessionId: data.sessionId },
+      });
+    } catch (err) {
+      setError(err.message);
+      setStartingId(null);
+    }
+  };
 
   if (loading)
     return <div className="ExercisesStatus">Loading exercises...</div>;
@@ -97,7 +107,17 @@ export default function Exercises() {
       ) : (
         <div className="ExercisesGrid">
           {exercises.map((exercise) => (
-            <div key={exercise.id} className="ExerciseCard">
+            <div
+              key={exercise.id}
+              className="ExerciseCard"
+              onClick={() => handleExerciseClick(exercise)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  handleExerciseClick(exercise);
+              }}
+            >
               {exercise.demoUrl && (
                 <img
                   src={exercise.demoUrl}
@@ -124,6 +144,10 @@ export default function Exercises() {
                   </p>
                 )}
               </div>
+
+              {startingId === exercise.id && (
+                <div className="ExerciseCardLoading">Starting...</div>
+              )}
             </div>
           ))}
         </div>
